@@ -26,8 +26,31 @@ public class CMDRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        testing(executor);
+        //Deploy Tables
+        System.out.println("Configure Tables...Started");
 
+        String createPassenger = "CREATE TABLE IF NOT EXISTS Passenger (" +
+                "id int auto_increment primary key" +
+                ", name varchar(1024) null" +
+                ", age  int default '18' null" +
+                ", sex varchar(12) null" +
+                ", constraint Passenger_id_uindex unique (id));";
+        executor.executeDDLQuery(createPassenger);
+
+        String createParson = "create table Person(uuid varchar(512) not null primary key" +
+                ", name varchar(512) null, age int null" +
+                ", active tinyint(1) null" +
+                ", salary double null,dob datetime null,height float null" +
+                ",createDate timestamp null, dobDate date null, createTime time null);";
+        executor2.executeDDLQuery(createParson);
+
+        System.out.println("Configure Tables...End");
+        //
+
+        System.out.println("1st....");
+        testing(executor);
+        System.out.println();
+        System.out.println("2nd ..... ");
         testing(executor2);
 
     }
@@ -35,17 +58,10 @@ public class CMDRunner implements CommandLineRunner {
     private void testing(SQLExecutor exe){
         //Testing
         try {
-            String createPassenger = "CREATE TABLE IF NOT EXISTS Passenger (" +
-                    "id int auto_increment primary key" +
-                    ", name varchar(1024) null" +
-                    ", age  int default '18' null" +
-                    ", sex varchar(12) null" +
-                    ", constraint Passenger_id_uindex unique (id));";
-            exe.executeDDLQuery(createPassenger);
-
             ResultSet set = exe.executeSelect("Select * from Passenger");
             exe.displayResultSet(set);
             System.out.println("Table Configuration ended");
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
