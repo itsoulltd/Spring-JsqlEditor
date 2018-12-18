@@ -1,0 +1,19 @@
+version: '3'
+services: 
+   mysql-test-db:
+      container_name: jsql-test-db-1
+      image: mysql:8.0.13
+      environment:
+          MYSQL_DATABASE: testDB
+          MYSQL_ROOT_PASSWORD: towhid@123
+      expose:
+          - 3306
+   spring-jsql-service:
+         container_name: spring-jsql-1
+         build:
+            context: .
+            dockerfile: Dockerfile
+         ports:
+            - 9092:8080
+         depends_on: 
+            - mysql-test-db
