@@ -1,4 +1,5 @@
 version: '3'
+# version-3 has commenting :)
 services: 
    mysql-test-db:
       container_name: jsql-test-db-1
@@ -16,6 +17,7 @@ services:
          environment:
             BASE_FILENAME: microservice.properties
             DATABASE_URL: jsql-test-db-1
+            com.itsoul.lab.api.gateway: http://itsoul-itracker-api.org
          ports:
             - 8092:8080
          depends_on: 

@@ -39,6 +39,8 @@ public class CMDRunner implements CommandLineRunner {
         System.out.println("BASE_FILENAME-3: " + sysEnv.get("BASE_FILENAME"));
 
         System.out.println("DATABASE_URL: " + sysEnv.get("DATABASE_URL"));
+
+        System.out.println("com.itsoul.lab.api.gateway: " + sysEnv.get("com.itsoul.lab.api.gateway"));
     }
 
     @Autowired
