@@ -4,16 +4,42 @@ import com.it.soul.lab.connect.JDBConnectionPool;
 import com.it.soul.lab.sql.SQLExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 @Component
 public class CMDRunner implements CommandLineRunner {
 
+    @Autowired
+    private Environment env;
+
+    @Value("${app.microservice.basename}")
+    private String baseName;
+
+    @EventListener({ContextRefreshedEvent.class})
+    public void refreshEventListener(){
+
+        //GeoTracker.shared().loadProperties(ResourceBundle.getBundle(baseName));
+        //log.info("API Gateway:" + WebResource.API_GATEWAY.value());
+
+        System.out.println("BASE_FILENAME: " + env.getProperty("BASE_FILENAME"));
+        System.out.println("BASE_FILENAME-2: " + baseName);
+
+        Map<String, String> sysEnv = System.getenv();
+        System.out.println("BASE_FILENAME-3: " + sysEnv.get("BASE_FILENAME"));
+
+        System.out.println("DATABASE_URL: " + sysEnv.get("DATABASE_URL"));
+    }
 
     @Autowired
     @Qualifier("JndiTemplate")
@@ -37,7 +63,7 @@ public class CMDRunner implements CommandLineRunner {
                 ", constraint Passenger_id_uindex unique (id));";
         executor.executeDDLQuery(createPassenger);
 
-        String createParson = "create table Person(uuid varchar(512) not null primary key" +
+        String createParson = "CREATE TABLE IF NOT EXISTS Person (uuid varchar(512) not null primary key" +
                 ", name varchar(512) null, age int null" +
                 ", active tinyint(1) null" +
                 ", salary double null,dob datetime null,height float null" +

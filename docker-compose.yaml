@@ -13,6 +13,9 @@ services:
          build:
             context: .
             dockerfile: Dockerfile
+         environment:
+            BASE_FILENAME: microservice.properties
+            DATABASE_URL: jsql-test-db-1
          ports:
             - 8092:8080
          depends_on: 
