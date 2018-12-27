@@ -1,4 +1,4 @@
-package com.itsoul.lab.app;
+package com.itsoul.lab.app.comnponents;
 
 import com.it.soul.lab.connect.JDBConnectionPool;
 import com.it.soul.lab.sql.SQLExecutor;
@@ -43,9 +43,9 @@ public class CMDRunner implements CommandLineRunner {
         System.out.println("com.itsoul.lab.api.gateway: " + sysEnv.get("com.itsoul.lab.api.gateway"));
     }
 
-    @Autowired
-    @Qualifier("JndiTemplate")
-    private SQLExecutor executor;
+//    @Autowired
+//    @Qualifier("JndiTemplate")
+//    private SQLExecutor executor;
 
     @Autowired
     @Qualifier("JDBConnectionPool")
@@ -63,7 +63,7 @@ public class CMDRunner implements CommandLineRunner {
                 ", age  int default '18' null" +
                 ", sex varchar(12) null" +
                 ", constraint Passenger_id_uindex unique (id));";
-        executor.executeDDLQuery(createPassenger);
+        executor2.executeDDLQuery(createPassenger);
 
         String createParson = "CREATE TABLE IF NOT EXISTS Person (uuid varchar(512) not null primary key" +
                 ", name varchar(512) null, age int null" +
@@ -74,13 +74,6 @@ public class CMDRunner implements CommandLineRunner {
 
         System.out.println("Configure Tables...End");
         //
-
-        System.out.println("1st....");
-        testing(executor);
-        System.out.println();
-        System.out.println("2nd ..... ");
-        testing(executor2);
-
     }
 
     private void testing(SQLExecutor exe){
@@ -89,7 +82,6 @@ public class CMDRunner implements CommandLineRunner {
             ResultSet set = exe.executeSelect("Select * from Passenger");
             exe.displayResultSet(set);
             System.out.println("Table Configuration ended");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {

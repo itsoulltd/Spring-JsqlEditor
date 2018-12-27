@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <!-- jsql-test-db-1 -->
-    <Resource auth="Container"
-              driverClassName="com.mysql.jdbc.Driver"
-              name="jdbc/testDB"
-              type="javax.sql.DataSource"
-              url="jdbc:mysql://jsql-test-db-1:3306/testDB"
-              username="root" password="towhid@123"/>
+    <!-- container_name:jsql-test-db-1 OR service:mysql-test-db -->
+    <!--<Resource auth="Container"-->
+              <!--driverClassName="com.mysql.jdbc.Driver"-->
+              <!--name="jdbc/testDB"-->
+              <!--type="javax.sql.DataSource"-->
+              <!--url="jdbc:mysql://mysql-test-db:3306/testDB"-->
+              <!--username="root" password="towhid@123"/>-->
 </Context>

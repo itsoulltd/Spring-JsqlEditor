@@ -51,6 +51,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jdbc -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>8.5.35</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.it.soul.lab</groupId>
             <artifactId>jsql-editor</artifactId>

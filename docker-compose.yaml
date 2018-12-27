@@ -2,7 +2,7 @@ version: '3'
 # version-3 has commenting :)
 services: 
    mysql-test-db:
-      container_name: jsql-test-db-1
+      #container_name: jsql-test-db-1
       image: mysql:8.0.13
       environment:
           MYSQL_DATABASE: testDB
@@ -10,15 +10,15 @@ services:
       expose:
           - 3306
    spring-jsql-service:
-         container_name: spring-jsql-1
+         #container_name: spring-jsql-1
          build:
             context: .
             dockerfile: Dockerfile
          environment:
             BASE_FILENAME: microservice.properties
-            DATABASE_URL: jsql-test-db-1
+            DATABASE_URL: mysql-test-db
             com.itsoul.lab.api.gateway: http://itsoul-itracker-api.org
          ports:
-            - 8092:8080
+            - 8084:8080
          depends_on: 
             - mysql-test-db
