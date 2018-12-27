@@ -38,7 +38,7 @@ public class CMDRunner implements CommandLineRunner {
         Map<String, String> sysEnv = System.getenv();
         System.out.println("BASE_FILENAME-3: " + sysEnv.get("BASE_FILENAME"));
 
-        System.out.println("DATABASE_URL: " + sysEnv.get("DATABASE_URL"));
+        System.out.println("MYSQL_DATABASE_HOST: " + sysEnv.get("MYSQL_DATABASE_HOST"));
 
         System.out.println("com.itsoul.lab.api.gateway: " + sysEnv.get("com.itsoul.lab.api.gateway"));
     }

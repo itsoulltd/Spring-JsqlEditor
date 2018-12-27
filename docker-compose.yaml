@@ -16,7 +16,10 @@ services:
             dockerfile: Dockerfile
          environment:
             BASE_FILENAME: microservice.properties
-            DATABASE_URL: mysql-test-db
+            MYSQL_DATABASE_HOST: mysql-test-db
+            MYSQL_DATABASE_PORT: 3306
+            MYSQL_DATABASE: testDB
+            MYSQL_ROOT_PASSWORD: towhid@123
             com.itsoul.lab.api.gateway: http://itsoul-itracker-api.org
          ports:
             - 8084:8080

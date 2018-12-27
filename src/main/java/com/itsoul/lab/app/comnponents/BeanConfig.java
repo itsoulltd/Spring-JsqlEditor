@@ -10,12 +10,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.jndi.JndiTemplate;
 
 import javax.naming.NamingException;
-//import javax.sql.DataSource;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import org.apache.tomcat.jdbc.pool.DataSource;
 
 @Configuration
 public class BeanConfig {
@@ -74,14 +73,15 @@ public class BeanConfig {
 
     private DataSource backupDataSource(){
 
-        String url = String.format("jdbc:mysql://%s:3306/testDB", env.getProperty("DATABASE_URL"));
+        String url = String.format("jdbc:mysql://%s:%s/%s", env.getProperty("MYSQL_DATABASE_HOST")
+                , env.getProperty("MYSQL_DATABASE_PORT"),env.getProperty("MYSQL_DATABASE"));
         System.out.println("Database URL: " + url);
 
-        DataSource ds = new DataSource();
+        org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
         ds.setUrl(url);
         ds.setUsername("root");
-        ds.setPassword("towhid@123");
+        ds.setPassword(env.getProperty("MYSQL_ROOT_PASSWORD"));
         ds.setInitialSize(5);
         ds.setMaxActive(10);
         ds.setMaxIdle(5);
@@ -94,12 +94,9 @@ public class BeanConfig {
     SQLExecutor executor() {
         SQLExecutor exe = null;
         try {
-
-            //JDBConnectionPool.configure("java:comp/env/jdbc/testDB");
-            //exe = new SQLExecutor(JDBConnectionPool.connection());
-
-            exe = new SQLExecutor(backupDataSource().getConnection());
-
+            //java:comp/env/jdbc/testDB
+            JDBConnectionPool.configure("testDB", backupDataSource());
+            exe = new SQLExecutor(JDBConnectionPool.connection());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

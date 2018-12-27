@@ -27,7 +27,7 @@ public class AppRestController {
 
         if (name.isEmpty() == false){
             Predicate cluse = new Where("name").isLike(name);
-            SQLSelectQuery query = new SQLQuery.Builder(SQLQuery.QueryType.SELECT)
+            SQLSelectQuery query = new SQLQuery.Builder(QueryType.SELECT)
                     .columns("name", "age")
                     .from("Passenger").where(cluse).build();
             try {
@@ -55,7 +55,7 @@ public class AppRestController {
 
         Row row = new Row().add("name", name).add("age", age).add("sex", sex);
 
-        SQLInsertQuery query = new SQLQuery.Builder(SQLQuery.QueryType.INSERT)
+        SQLInsertQuery query = new SQLQuery.Builder(QueryType.INSERT)
                                     .into("Passenger")
                                     .values(row.getProperties().toArray(new Property[0]))
                                     .build();
@@ -78,7 +78,7 @@ public class AppRestController {
 
         Row row = new Row().add(property, value);
 
-        SQLUpdateQuery query = new SQLQuery.Builder(SQLQuery.QueryType.UPDATE)
+        SQLUpdateQuery query = new SQLQuery.Builder(QueryType.UPDATE)
                 .set(row.getProperties().toArray(new Property[0]))
                 .from("Passenger")
                 .where(new Where("name").isEqualTo(where))
@@ -97,7 +97,7 @@ public class AppRestController {
     public ResponseEntity<String> delete(@RequestParam("where") String where){
         String result = "";
 
-        SQLDeleteQuery query = new SQLQuery.Builder(SQLQuery.QueryType.DELETE)
+        SQLDeleteQuery query = new SQLQuery.Builder(QueryType.DELETE)
                                     .rowsFrom("Passenger")
                                     .where(new Where("name").isEqualTo(where)).build();
 
