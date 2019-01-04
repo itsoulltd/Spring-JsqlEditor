@@ -18,12 +18,11 @@ public class SQLExeCreator {
 
     private DataSource backupDataSource(){
 
-        String url = String.format("jdbc:mysql://%s:%s/%s", env.getProperty("MYSQL_DATABASE_HOST")
-                , env.getProperty("MYSQL_DATABASE_PORT"),env.getProperty("MYSQL_DATABASE"));
+        String url = env.getProperty("spring.datasource.url");
         System.out.println("Database URL: " + url);
 
         org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
         ds.setUrl(url);
         ds.setUsername("root");
         ds.setPassword(env.getProperty("MYSQL_ROOT_PASSWORD"));
@@ -31,6 +30,7 @@ public class SQLExeCreator {
         ds.setMaxActive(10);
         ds.setMaxIdle(5);
         ds.setMinIdle(2);
+        //ds.setValidationQuery("select now()");
 
         return ds;
     }
