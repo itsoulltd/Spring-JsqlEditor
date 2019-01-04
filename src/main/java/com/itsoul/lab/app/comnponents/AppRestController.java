@@ -1,5 +1,6 @@
 package com.itsoul.lab.app.comnponents;
 
+import com.it.soul.lab.connect.JDBConnectionPool;
 import com.it.soul.lab.sql.SQLExecutor;
 import com.it.soul.lab.sql.query.*;
 import com.it.soul.lab.sql.query.models.*;
@@ -35,6 +36,36 @@ public class AppRestController {
                     .from("Passenger").where(cluse).build();
             try {
                 Table tab = executor.collection(executor.executeSelect(query));
+                if (tab.getRows().size() > 0) {
+                    result = "Hi There "
+                            + tab.getRows().get(0).getProperties().get(0).getValue().toString()
+                            + " (age:" + tab.getRows().get(0).getProperties().get(1).getValue().toString() + ")"
+                            + "! Welcome.";
+                }
+            } catch (SQLException e) {
+                return ResponseEntity.ok(e.getMessage());
+            }
+
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @Autowired
+    private SQLExeCreator creator;
+
+    @RequestMapping("/newExe/findByName")
+    public ResponseEntity<String> newExefindByName(@RequestParam("name") String name){
+
+        String result = "Not Found!!!";
+
+        if (name.isEmpty() == false){
+            Predicate cluse = new Where("name").isLike(name);
+            SQLSelectQuery query = new SQLQuery.Builder(QueryType.SELECT)
+                    .columns("name", "age")
+                    .from("Passenger").where(cluse).build();
+
+            try (SQLExecutor exe = creator.executor(null)){
+                Table tab = exe.collection(executor.executeSelect(query));
                 if (tab.getRows().size() > 0) {
                     result = "Hi There "
                             + tab.getRows().get(0).getProperties().get(0).getValue().toString()

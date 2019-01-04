@@ -69,38 +69,11 @@ public class BeanConfig {
 //    }
 
     @Autowired
-    private Environment env;
-
-    private DataSource backupDataSource(){
-
-        String url = String.format("jdbc:mysql://%s:%s/%s", env.getProperty("MYSQL_DATABASE_HOST")
-                , env.getProperty("MYSQL_DATABASE_PORT"),env.getProperty("MYSQL_DATABASE"));
-        System.out.println("Database URL: " + url);
-
-        org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl(url);
-        ds.setUsername("root");
-        ds.setPassword(env.getProperty("MYSQL_ROOT_PASSWORD"));
-        ds.setInitialSize(5);
-        ds.setMaxActive(10);
-        ds.setMaxIdle(5);
-        ds.setMinIdle(2);
-
-        return ds;
-    }
+    private SQLExeCreator creator;
 
     @Bean("JDBConnectionPool")
     SQLExecutor executor() {
-        SQLExecutor exe = null;
-        try {
-            //java:comp/env/jdbc/testDB
-            JDBConnectionPool.configure("testDB", backupDataSource());
-            exe = new SQLExecutor(JDBConnectionPool.connection());
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
+        SQLExecutor exe = creator.executor("testDB");
         System.out.println("Created DB Connections.");
         return exe;
     }
