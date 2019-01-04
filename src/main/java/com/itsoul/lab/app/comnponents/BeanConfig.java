@@ -1,20 +1,9 @@
 package com.itsoul.lab.app.comnponents;
 
-import com.it.soul.lab.connect.JDBConnectionPool;
 import com.it.soul.lab.sql.SQLExecutor;
-import com.it.soul.lab.sql.query.models.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.jndi.JndiTemplate;
-
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 @Configuration
 public class BeanConfig {
@@ -69,7 +58,7 @@ public class BeanConfig {
 //    }
 
     @Autowired
-    private SQLExeCreator creator;
+    private SQLExecutorFactory creator;
 
     @Bean("JDBConnectionPool")
     SQLExecutor executor() {

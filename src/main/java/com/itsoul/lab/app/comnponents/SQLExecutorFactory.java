@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 @Component
-public class SQLExeCreator {
+public class SQLExecutorFactory {
 
     @Autowired
     private Environment env;
 
-    private DataSource backupDataSource(){
+    private DataSource createDataSource(){
 
         String url = env.getProperty("spring.datasource.url");
         System.out.println("Database URL: " + url);
@@ -40,7 +40,7 @@ public class SQLExeCreator {
         try {
             //java:comp/env/jdbc/testDB
             if (key == null || key.isEmpty()) key = UUID.randomUUID().toString();
-            JDBConnectionPool.configure(key, backupDataSource());
+            JDBConnectionPool.configure(key, createDataSource());
             exe = new SQLExecutor(JDBConnectionPool.connection(key));
         } catch (SQLException e) {
             System.out.println(e.getMessage());

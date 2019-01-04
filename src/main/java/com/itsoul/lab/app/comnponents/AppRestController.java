@@ -1,6 +1,5 @@
 package com.itsoul.lab.app.comnponents;
 
-import com.it.soul.lab.connect.JDBConnectionPool;
 import com.it.soul.lab.sql.SQLExecutor;
 import com.it.soul.lab.sql.query.*;
 import com.it.soul.lab.sql.query.models.*;
@@ -51,7 +50,7 @@ public class AppRestController {
     }
 
     @Autowired
-    private SQLExeCreator creator;
+    private SQLExecutorFactory creator;
 
     @RequestMapping("/newExe/findByName")
     public ResponseEntity<String> newExefindByName(@RequestParam("name") String name){
