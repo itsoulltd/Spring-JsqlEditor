@@ -3,6 +3,8 @@ package com.itsoul.lab.app.comnponents;
 import com.it.soul.lab.sql.SQLExecutor;
 import com.it.soul.lab.sql.query.*;
 import com.it.soul.lab.sql.query.models.*;
+import com.itsoul.lab.app.beans.Passenger;
+import com.itsoul.lab.app.repository.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -21,7 +24,7 @@ public class AppRestController {
     private SQLExecutor executor;
 
     @RequestMapping("/findByName")
-    public ResponseEntity<String> helloMessage(@RequestParam("name") String name){
+    public ResponseEntity<String> findByName(@RequestParam("name") String name){
 
         String result = "Not Found!!!";
 
@@ -40,6 +43,29 @@ public class AppRestController {
                 }
             } catch (SQLException e) {
                 return ResponseEntity.ok(e.getMessage());
+            }
+
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @Autowired
+    private PassengerService peeService;
+
+    @RequestMapping("/jpa/findByName")
+    public ResponseEntity<String> jpaFindByName(@RequestParam("name") String name){
+
+        String result = "Not Found!!!";
+
+        if (name.isEmpty() == false){
+            Optional<Passenger> passenger = peeService.findByName(name);
+            if (passenger.isPresent()) {
+                result = "Hi There "
+                        + passenger.get().getName()
+                        + " (age:" + passenger.get().getAge() + ")"
+                        + "! Welcome.";
+            }else {
+                ResponseEntity.ok(result);
             }
 
         }
