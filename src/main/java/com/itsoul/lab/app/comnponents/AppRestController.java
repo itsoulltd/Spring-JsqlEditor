@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -88,11 +89,12 @@ public class AppRestController {
         String result = "Not Found!!!";
 
         if (name.isEmpty() == false){
-            Optional<Passenger> passenger = peeService.findByName(name);
-            if (passenger.isPresent()) {
+            List<Passenger> passengers = peeService.findByName(name);
+            if (passengers.size() > 0) {
+                Passenger passenger = passengers.get(0);
                 result = "Hi There "
-                        + passenger.get().getName()
-                        + " (age:" + passenger.get().getAge() + ")"
+                        + passenger.getName()
+                        + " (age:" + passenger.getAge() + ")"
                         + "! Welcome.";
             }else {
                 ResponseEntity.ok(result);
