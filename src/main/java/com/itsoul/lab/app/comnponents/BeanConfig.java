@@ -60,7 +60,7 @@ public class BeanConfig {
     @Autowired
     private SQLExecutorFactory creator;
 
-    @Bean("JDBConnectionPool")
+    @Bean("SQLExecutor")
     SQLExecutor executor() {
         SQLExecutor exe = creator.executor("testDB");
         System.out.println("Created DB Connections.");

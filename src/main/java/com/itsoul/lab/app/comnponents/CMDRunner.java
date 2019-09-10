@@ -45,7 +45,7 @@ public class CMDRunner implements CommandLineRunner {
 //    private SQLExecutor executor;
 
     @Autowired
-    @Qualifier("JDBConnectionPool")
+    @Qualifier("SQLExecutor")
     private SQLExecutor executor2;
 
     @Override

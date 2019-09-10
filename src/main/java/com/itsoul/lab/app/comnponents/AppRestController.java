@@ -21,7 +21,7 @@ import java.util.Optional;
 public class AppRestController {
 
     @Autowired
-    @Qualifier("JDBConnectionPool")
+    @Qualifier("SQLExecutor")
     private SQLExecutor executor;
 
     @RequestMapping("/findByName")
