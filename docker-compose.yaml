@@ -1,27 +1,28 @@
-version: '3'
-# version-3 has commenting :)
-services: 
+version: '3.5'
+
+services:
+
    mysql-test-db:
-      #container_name: jsql-test-db-1
       image: mysql:8.0.13
       environment:
           MYSQL_DATABASE: testDB
           MYSQL_ROOT_PASSWORD: towhid@123
-      expose:
-          - 3306
+      ports:
+          - 3316:3306
+
    spring-jsql-service:
-         #container_name: spring-jsql-1
          build:
             context: .
             dockerfile: Dockerfile
          environment:
             BASE_FILENAME: microservice.properties
-            MYSQL_DATABASE_HOST: mysql-test-db
-            MYSQL_DATABASE_PORT: 3306
-            MYSQL_DATABASE: testDB
-            MYSQL_ROOT_PASSWORD: towhid@123
+            app.db.testdb.host: mysql-test-db
+            app.db.testdb.port: 3306
+            app.db.testdb.name: testDB
+            app.db.testdb.username: root
+            app.db.testdb.password: towhid@123
             com.itsoul.lab.api.gateway: http://itsoul-itracker-api.org
          ports:
-            - 8084:8080
-         depends_on: 
+            - 8085:8080
+         depends_on:
             - mysql-test-db

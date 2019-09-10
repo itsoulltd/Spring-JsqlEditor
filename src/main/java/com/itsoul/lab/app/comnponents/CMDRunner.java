@@ -1,6 +1,5 @@
 package com.itsoul.lab.app.comnponents;
 
-import com.it.soul.lab.connect.JDBConnectionPool;
 import com.it.soul.lab.sql.SQLExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,11 +10,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 @Component
 public class CMDRunner implements CommandLineRunner {

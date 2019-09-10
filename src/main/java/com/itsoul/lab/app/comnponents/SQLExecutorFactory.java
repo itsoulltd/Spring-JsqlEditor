@@ -24,8 +24,8 @@ public class SQLExecutorFactory {
         org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
         ds.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
         ds.setUrl(url);
-        ds.setUsername("root");
-        ds.setPassword(env.getProperty("MYSQL_ROOT_PASSWORD"));
+        ds.setUsername(env.getProperty("app.db.testdb.username"));
+        ds.setPassword(env.getProperty("app.db.testdb.password"));
         ds.setInitialSize(5);
         ds.setMaxActive(10);
         ds.setMaxIdle(5);

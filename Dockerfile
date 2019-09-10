@@ -1,3 +1,4 @@
 FROM library/tomcat:8.5.35
 
-COPY target/spring-jsql.war /usr/local/tomcat/webapps/spring-jsql.war
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+COPY target/ROOT.war /usr/local/tomcat/webapps/
